@@ -33,14 +33,11 @@ namespace Bank_Console_App
             return newId;
         }
 
-
-
         public void LoggedOut()
         {
             authorised = false;
             Console.WriteLine("Sad to see you leave so soon!");
             Console.WriteLine("You have been logged out.");
-            Console.WriteLine("Sad to see you leave so soon!");
             Console.WriteLine("-------------------------------");
         }
 

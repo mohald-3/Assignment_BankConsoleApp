@@ -1,17 +1,25 @@
-﻿using System.Collections.Generic; // NOT FINISHED
+﻿
 
 namespace Bank_Console_App
 {
     public abstract class BankAccount
     {
-        string? accountHolderName;
-        public int accountNumber;
-        public string? accountType;
-        public int balance;
-        List<(DateTime time, int amount, int fromAccount, int toAccount )> TransfareEvent = new List<(DateTime, int, int, int)>() ; // creates a tuple in a list
+        string? accountHolderName {  get; set; }
+        public int accountNumber { get; set; }
+        public string? accountType { get; set; }
+        public int balance { get; set; }
 
-        private HashSet<int> accountIDs = new HashSet<int>();  // Keeps track of used accountIDs NOT FINISHED
-        private Random random = new Random();  // Random number generator NOT FINISHED
+        // creates a list of tuples
+        List<(DateTime time, int amount, int fromAccount, int toAccount )> TransferEvents = new List<(DateTime, int, int, int)>(); 
+
+        public BankAccount(string firstName, string lastName, int number, string type, int initialBalance)
+        {
+            accountHolderFirstName = firstName;
+            accountHolderLastName = lastName;
+            accountNumber = number;
+            accountType = type;
+            balance = initialBalance;
+        }
 
         public int CheckBalance()
         {
@@ -40,3 +48,7 @@ namespace Bank_Console_App
 
     }
 }
+
+//using System.Collections.Generic; // NOT FINISHED
+//private HashSet<int> accountIDs = new HashSet<int>();  // Keeps track of used accountIDs NOT FINISHED
+//private Random random = new Random();  // Random number generator NOT FINISHED
