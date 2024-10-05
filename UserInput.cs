@@ -4,9 +4,10 @@ namespace Bank_Console_App
 {
     public class UserInput
     {
-        public string inputText;
+        public string? inputText;
         public int inputNumber;
         public int inputID;
+        public int accountNumber;
 
         // Method to get validated text input
         public string GetTextInput()

@@ -6,6 +6,7 @@ namespace Bank_Console_App
     {
         private HashSet<int> usedIDs = new HashSet<int>();  // Keeps track of used accountHolderIds
         private Random random = new Random();  // Random number generator
+        public List<BankAccount> OwnedAccounts = new List<BankAccount>();
         public bool authorised = false;
 
 
@@ -44,7 +45,6 @@ namespace Bank_Console_App
         public void LoggedIn()
         {
             authorised = true;
-            Console.WriteLine("-------------------------------");
         }
 
     }

@@ -1,10 +1,10 @@
 ﻿
-
 namespace Bank_Console_App
 {
     public abstract class BankAccount
     {
-        string? accountHolderName {  get; set; }
+        string? accountHolderFirstName {  get; set; }
+        string? accountHolderLastName { get; set; }
         public int accountNumber { get; set; }
         public string? accountType { get; set; }
         public int balance { get; set; }
@@ -12,18 +12,19 @@ namespace Bank_Console_App
         // creates a list of tuples
         List<(DateTime time, int amount, int fromAccount, int toAccount )> TransferEvents = new List<(DateTime, int, int, int)>(); 
 
-        public BankAccount(string firstName, string lastName, int number, string type, int initialBalance)
+        public BankAccount(string FirstName, string LastName, int AccountNumber, string Accounttype, int InitialBalance)
         {
-            accountHolderFirstName = firstName;
-            accountHolderLastName = lastName;
-            accountNumber = number;
-            accountType = type;
-            balance = initialBalance;
+            accountHolderFirstName = FirstName;
+            accountHolderLastName = LastName;
+            accountNumber = AccountNumber;
+            accountType = Accounttype;
+            balance = InitialBalance;
         }
 
-        public int CheckBalance()
+        public void CheckBalance()
         {
-            return balance;
+            Console.WriteLine($"Your current balance is {balance:SEK}");
+            
         }
 
         public void Deposit(int amount)
@@ -43,6 +44,10 @@ namespace Bank_Console_App
             {
                 Console.WriteLine("Insufficient funds.");
             }
+        }
+        public void TransferMoney()
+        {
+
         }
 
 
