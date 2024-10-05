@@ -47,6 +47,7 @@ namespace Bank_Console_App
         public void LoggedIn()
         {
             authorised = true;
+            Console.WriteLine("-------------------------------");
         }
 
     }
