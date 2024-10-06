@@ -1,8 +1,12 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace Bank_Console_App
 {
     public abstract class BankAccount
     {
+        private static HashSet<int> usedAccountNumbers = new HashSet<int>();  // Keeps track of used account numbers
+        private static Random random = new Random();  // Random number generator
+
         string? accountHolderFirstName {  get; set; }
         string? accountHolderLastName { get; set; }
         public int accountNumber { get; set; }
@@ -12,13 +16,26 @@ namespace Bank_Console_App
         // creates a list of tuples
         List<(DateTime time, int amount, int senderAccount, int recipientAccount)> TransferHistory = new List<(DateTime, int, int, int)>(); 
 
-        public BankAccount(string FirstName, string LastName, int AccountNumber, string Accounttype, int InitialBalance)
+        public BankAccount(string FirstName, string LastName, string Accounttype, int InitialBalance)
         {
             accountHolderFirstName = FirstName;
             accountHolderLastName = LastName;
-            accountNumber = AccountNumber;
+            accountNumber = GenerateUniqueAccountNumber();
             accountType = Accounttype;
             balance = InitialBalance;
+        }
+
+        private int GenerateUniqueAccountNumber()
+        {
+            int newAccountNumber;
+            do
+            {
+                newAccountNumber = random.Next(10000, 99999);  // Generates a number between 10000 and 99999
+            }
+            while (usedAccountNumbers.Contains(newAccountNumber));  // Ensure it's unique
+
+            usedAccountNumbers.Add(newAccountNumber);  // Add the unique account number to the set
+            return newAccountNumber;
         }
 
         public void CheckBalance()
@@ -29,20 +46,34 @@ namespace Bank_Console_App
 
         public void Deposit(int amount)
         {
-            balance += amount;
-            Console.WriteLine($"{amount} SEK deposited. New balance: {balance} SEK");
+            if (amount > 0)
+            {
+                balance += amount;
+                Console.WriteLine($"{amount} SEK deposited. New balance: {balance} SEK");
+            }
+            else
+            {
+                Console.WriteLine("The amount can not be negative number");
+            }
         }
 
         public void Withdraw(int amount)
         {
-            if (amount <= balance)
+            if (amount > 0)
             {
-                balance -= amount;
-                Console.WriteLine($"{amount} SEK withdrawn. New balance: {balance} SEK");
+                if (amount <= balance)
+                {
+                    balance -= amount;
+                    Console.WriteLine($"{amount} SEK withdrawn. New balance: {balance} SEK");
+                }
+                else
+                {
+                    Console.WriteLine("Insufficient funds.");
+                }
             }
             else
             {
-                Console.WriteLine("Insufficient funds.");
+                Console.WriteLine("The amount can not be negative number");
             }
         }
         public void TransferMoney(int amount, int senderAccount, int recipientAccount)

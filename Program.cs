@@ -30,7 +30,6 @@ namespace Bank_Console_App
                 switch (inputNumber)
                 {
                     case 1:
-
                         Console.WriteLine("Great! We’re excited to get to know you! Please provide your first and last name.");
 
                         Console.WriteLine("Please insert your first name:");
@@ -44,7 +43,6 @@ namespace Bank_Console_App
                         break;
 
                     case 2:
-
                         if (users.Count == 0)
                         {
                             Console.WriteLine("It looks like you haven’t set up an account with us yet. Let’s get started on creating your first one!");
@@ -61,7 +59,8 @@ namespace Bank_Console_App
                             Console.WriteLine("Kindly enter the 4-digit ID of the account you'd like to sign in to.");
                             userInput.inputID = userInput.GetNumberInput();
 
-                            currentUser = users.Find(user => user.accountHolderId == userInput.inputID)!;  // Find user by ID
+                            // Find user by ID
+                            currentUser = users.Find(user => user.accountHolderId == userInput.inputID)!;  
 
                             if (currentUser != null)
                             {
@@ -77,7 +76,6 @@ namespace Bank_Console_App
                         break;
 
                     case 9:
-
                         Environment.Exit(0);
                         break;
 
@@ -88,7 +86,6 @@ namespace Bank_Console_App
             }
             while (true);
         }
-        // add these later -- out int fromAccount, out int toAccount , List<accounts> accounts --
         private static void UserMenu(UserInput userInput, User user, out int inputNumber, List<User> users, List<BankAccount> bankAccounts)
         {
             do
@@ -97,15 +94,11 @@ namespace Bank_Console_App
                 inputNumber = userInput.GetNumberInput();
                 switch (inputNumber)
                 {
-                    // 1. Create a new bank account, leads to BankAccountMenu list
                     case 1:
-
                         BankAccountCreationMenu(userInput, user, out userInput.inputNumber, users, currentUser.OwnedAccounts);
                         break;
 
-                    // 2. choose an existing account
                     case 2:
-
                         if (currentUser.OwnedAccounts.Count == 0)
                         {
                             Console.WriteLine("It looks like you haven’t set up an account with us yet. Let’s get started on creating your first one!");
@@ -127,7 +120,6 @@ namespace Bank_Console_App
 
                             if (currentAccount != null)
                             {
-
                                 Console.WriteLine($"You are inside your {currentAccount.accountType} with account number {currentAccount.accountNumber}.");
                                 BankAccountAction(userInput, currentUser, out userInput.inputNumber, users, currentUser.OwnedAccounts);
                             }
@@ -139,13 +131,11 @@ namespace Bank_Console_App
                         break;
 
                     case 3:
-
                         user.LoggedOut();
                         MainMenu(userInput, out userInput.inputNumber, out userInput.inputID, users);
                         break;
 
                     case 9:
-
                         Environment.Exit(0);
                         break;
 
@@ -161,7 +151,7 @@ namespace Bank_Console_App
         }
 
 
-        private static void BankAccountCreationMenu(UserInput userInput, User user, out int inputNumber, List<User> users, List<BankAccount> OwnedAccounts) //resolved
+        private static void BankAccountCreationMenu(UserInput userInput, User user, out int inputNumber, List<User> users, List<BankAccount> OwnedAccounts)
         {
             bool proceed = false;
             do
@@ -172,39 +162,28 @@ namespace Bank_Console_App
                 switch (inputNumber)
                 {
                     
-                    //Console.WriteLine("1. Personal account");
                     case 1:
-
                         Console.WriteLine("You want to create a personal account. Please insert the amount of money you would like to start the account with");
                         inputNumber = userInput.GetNumberInput();
-                        currentUser.OwnedAccounts.Add(new PersonalAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, 10500, inputNumber));
-                        // auto generate bankaccountID
+                        currentUser.OwnedAccounts.Add(new PersonalAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, inputNumber));
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("2. Investment account");
                     case 2:
-
                         Console.WriteLine("You want to create a Investment account. Please insert the amount of money you would like to start the account with");
                         inputNumber = userInput.GetNumberInput();
-                        currentUser.OwnedAccounts.Add(new InvestmentAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, 10400, inputNumber));
-                        // auto generate bankaccountID
+                        currentUser.OwnedAccounts.Add(new InvestmentAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, inputNumber));
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("3. Savings account");
                     case 3:
-
                         Console.WriteLine("You want to create a Savings account. Please insert the amount of money you would like to start the account with");
                         inputNumber = userInput.GetNumberInput();
-                        currentUser.OwnedAccounts.Add(new SavingsAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, 10300, inputNumber));
-                        // auto generate bankaccountID
+                        currentUser.OwnedAccounts.Add(new SavingsAccount(currentUser.accountHolderFirstName, currentUser.accountHolderLastName, inputNumber));
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("4. Go back");
                     case 4:
-
                         proceed = true;
                         break;
 
@@ -223,43 +202,32 @@ namespace Bank_Console_App
             bool proceed = false;
             do
             {
-
                 BankAccountActionMenu();
 
                 inputNumber = userInput.GetNumberInput();
                 switch (inputNumber)
                 {
 
-                    //Console.WriteLine("1. Check balance");
                     case 1:
                         currentAccount.CheckBalance();
-                        //Console.WriteLine($"Your current balance is {currentAccount.balance}");
                         proceed = true;
                         break;
-
-                    //Console.WriteLine("2. Deposit money");
+                    
                     case 2:
-
                         Console.WriteLine("Please insert the amount you would like to deposit:");
                         userInput.inputNumber = userInput.GetNumberInput();
                         currentAccount.Deposit(userInput.inputNumber);
-                        //Console.WriteLine($"You successfully added {userInput.inputNumber} to your account. Your current balance is {currentAccount.balance}");
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("3. Withdraw money");
                     case 3:
-
                         Console.WriteLine(" Please insert the amount you would like to withdraw:");
                         userInput.inputNumber = userInput.GetNumberInput();
                         currentAccount.Withdraw(userInput.inputNumber);
-                        //Console.WriteLine($"You successfully withdrew {userInput.inputNumber} from your account. Your current balance is {currentAccount.balance}");
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("4. Transfer money");
                     case 4:
-
                         if (currentUser.OwnedAccounts.Count <= 1)
                         {
                             Console.WriteLine("You do not have enough bank accounts.");
@@ -269,12 +237,11 @@ namespace Bank_Console_App
                         else
                         {
                             Console.WriteLine("Here is your existing accounts:");
-                            foreach (var account in currentUser.OwnedAccounts) // prints out the list of account
+                            foreach (var account in currentUser.OwnedAccounts)
                             {
                                 Console.WriteLine($"Account number: {account.accountNumber}, account type: {account.accountType}.");
                             }
 
-                            
                             do
                             {
                                 Console.WriteLine("Please enter the 5-digit account number you'd like to transfer money to.");
@@ -283,22 +250,27 @@ namespace Bank_Console_App
                                 {
                                     Console.WriteLine("You can not trasfer to the same account");
                                 }
+                                else
+                                {
+                                    // Finds account by account number
+                                    recipientAccount = currentUser.OwnedAccounts.Find(account => account.accountNumber == userInput.accountNumber)!;
+                                    if (recipientAccount == null)
+                                    {
+                                        Console.WriteLine("This account does not exist. Please try again");
+                                    }
+                                }
                             }
-                            while (userInput.accountNumber == currentAccount.accountNumber);
-                            
+                            while (userInput.accountNumber == currentAccount.accountNumber || recipientAccount == null);
 
-                            // Finds account by account number
-                            recipientAccount = currentUser.OwnedAccounts.Find(account => account.accountNumber == userInput.accountNumber)!;
-
-                            if (currentAccount != null)
+                            if (currentAccount != null && recipientAccount!= null)
                             {
                                 Console.WriteLine("Please type in the amount you would like to transfer");
                                 userInput.inputAmount = userInput.GetNumberInput();
-                                if (userInput.inputAmount >= currentAccount.balance)
+                                if (userInput.inputAmount <= currentAccount.balance)
                                 {
                                     currentAccount.TransferMoney(userInput.inputAmount, currentAccount.accountNumber, recipientAccount.accountNumber);
                                     recipientAccount.TransferMoney(userInput.inputAmount, currentAccount.accountNumber, recipientAccount.accountNumber);
-                                    Console.WriteLine($"Transfer successful. You transfered {userInput.inputAmount:SEK} to account number {recipientAccount.accountNumber} from account number {currentAccount.accountNumber}.");
+                                    Console.WriteLine($"Transfer successful. You transfered {userInput.inputAmount} SEK to account number {recipientAccount.accountNumber} from account number {currentAccount.accountNumber}.");
                                 }
                                 else 
                                 {
@@ -316,15 +288,12 @@ namespace Bank_Console_App
                         break;
 
                     case 5:
-
                         Console.WriteLine("Here is the transfer history of your account:");
                         currentAccount.CheckTransferHistory();
                         proceed = true;
                         break;
 
-                    //Console.WriteLine("5. Go back");
                     case 6:
-
                         UserMenu(userInput, currentUser, out userInput.inputNumber, users, OwnedAccounts);
                         break;
 
@@ -338,7 +307,8 @@ namespace Bank_Console_App
             BankAccountAction(userInput, currentUser, out userInput.inputNumber, users, OwnedAccounts);
         }
 
-        private static void WelcomePhrase() // resolved
+        //Menus 
+        private static void WelcomePhrase() 
         {
             Console.WriteLine("====================================================================================================");
             Console.WriteLine("Welcome to Eddie's Bank, where your financial journey is in great hands!");
@@ -347,7 +317,7 @@ namespace Bank_Console_App
 
         }
 
-        private static void MainMenuText() //resolved
+        private static void MainMenuText() 
         {
             Console.WriteLine("-----------------------------------------");
             Console.WriteLine("How can we help you today?");
@@ -362,13 +332,13 @@ namespace Bank_Console_App
             Console.WriteLine("-----------------------------------------");
             Console.WriteLine("How can we help you today?");
             Console.WriteLine("-----------------------------------------");
-            Console.WriteLine("1. Create a new bank account"); // leads to BankAccountMenu list
-            Console.WriteLine("2. Choose an existing account"); // leads to BankAccountActionMenu list
+            Console.WriteLine("1. Create a new bank account");
+            Console.WriteLine("2. Choose an existing account"); 
             Console.WriteLine("3. Log out");
             Console.WriteLine("9. Exit Application");
         }
 
-        private static void BankAccountCreationMenuText() //resolved
+        private static void BankAccountCreationMenuText()
         {
             Console.WriteLine("-----------------------------------------");
             Console.WriteLine("Which type of account would you like to create?");
