@@ -8,6 +8,7 @@ namespace Bank_Console_App
         public int inputNumber;
         public int inputID;
         public int accountNumber;
+        public int inputAmount;
 
         // Method to get validated text input
         public string GetTextInput()
